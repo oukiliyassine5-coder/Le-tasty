@@ -1,0 +1,502 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Le Tasty Martigues</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Kaushan+Script&family=Anton&family=Archivo:wght@400;600;800;900&family=Archivo+Narrow:wght@500;700&display=swap">
+<style>
+/* Mise en page : plage blanche de Miami au coucher du soleil ; soleil rayé et palmiers en bas du hero ; carte en onglets ; barre d'actions collante sur mobile. Thème clair unique, assumé. */
+:root {
+  --sable: #ffffff;
+  --ecume: #eefafa;
+  --nuit: #0c2340;
+  --gris: #51627a;
+  --lagon: #00b8bd;
+  --lagon-fonce: #007f86;
+  --soleil: #ff7a1a;
+  --soleil-fonce: #c24e00;
+  --jaune: #ffc93c;
+  --ok: #0d8a4e;
+  --ko: #d1301f;
+  --f-enseigne: "Kaushan Script", "Brush Script MT", cursive;
+  --f-titre: "Anton", "Impact", "Arial Narrow Bold", sans-serif;
+  --f-texte: "Archivo", "Helvetica Neue", Arial, sans-serif;
+  --f-etiquette: "Archivo Narrow", "Arial Narrow", Arial, sans-serif;
+  color-scheme: light;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { margin: 0; background: var(--sable); color: var(--nuit); font: 400 1rem/1.6 var(--f-texte); }
+.wrap { max-width: 1080px; margin: 0 auto; padding-inline: 16px; }
+a { color: inherit; }
+:focus-visible { outline: 3px solid var(--lagon); outline-offset: 3px; border-radius: 4px; }
+h1, h2, h3 { text-wrap: balance; margin: 0; }
+.retro { color: var(--sable); -webkit-text-stroke: 2px var(--nuit); paint-order: stroke fill; text-shadow: 4px 4px 0 var(--lagon); }
+
+.top { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 10; background: rgba(255,255,255,.92); backdrop-filter: blur(10px); border-bottom: 3px solid var(--lagon); }
+.top .wrap { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-block: 10px; }
+.marque { font: 400 1.8rem/1 var(--f-enseigne); text-decoration: none; }
+.top nav { display: flex; gap: 22px; font: 700 .8rem/1 var(--f-etiquette); letter-spacing: .14em; text-transform: uppercase; }
+.top nav a { text-decoration: none; color: var(--gris); }
+.top nav a:hover { color: var(--lagon-fonce); }
+@media (max-width: 640px) { .top nav { display: none; } }
+
+.hero { position: relative; padding-block: 40px 0; overflow: hidden; background: linear-gradient(180deg, var(--sable) 0%, var(--sable) 55%, var(--ecume) 100%); }
+.hero .wrap { position: relative; z-index: 1; display: grid; grid-template-columns: minmax(0,1.05fr) minmax(0,1fr); gap: 40px; align-items: center; padding-bottom: 64px; }
+.logo { width: 100%; max-width: 500px; aspect-ratio: 1; border-radius: 28px; overflow: hidden; background: var(--sable); box-shadow: 10px 10px 0 var(--lagon), 0 0 0 3px var(--nuit); }
+.logo svg { display: block; width: 100%; height: 100%; }
+.statut { display: inline-flex; align-items: center; gap: 10px; font: 700 .85rem/1 var(--f-etiquette); letter-spacing: .12em; text-transform: uppercase; padding: 9px 14px; border-radius: 999px; border: 2px solid currentColor; background: var(--sable); }
+.statut .dot { width: 9px; height: 9px; border-radius: 50%; background: currentColor; }
+.statut.ouvert { color: var(--ok); }
+.statut.ferme { color: var(--ko); }
+.statut small { font: 500 .85rem/1 var(--f-texte); letter-spacing: 0; text-transform: none; color: var(--gris); }
+.hero h1 { font: 400 clamp(2.6rem, 7vw, 4.6rem)/1 var(--f-titre); text-transform: uppercase; margin-top: 22px; letter-spacing: .01em; }
+.hero h1 em { font: 400 1.05em/1 var(--f-enseigne); text-transform: none; font-style: normal; color: var(--soleil); }
+.hero p.lead { color: var(--gris); font-size: 1.12rem; max-width: 34ch; margin: 18px 0 28px; }
+.actions { display: flex; flex-wrap: wrap; gap: 12px; }
+.btn { display: inline-flex; align-items: center; gap: 10px; padding: 15px 22px; border-radius: 14px; font: 800 1rem/1 var(--f-texte); text-decoration: none; cursor: pointer; border: 0; transition: transform .15s, box-shadow .15s; }
+.btn:hover { transform: translate(-2px,-2px); }
+.btn-appel { background: var(--soleil); color: var(--nuit); box-shadow: 4px 4px 0 var(--nuit); }
+.btn-appel:hover { box-shadow: 6px 6px 0 var(--nuit); }
+.btn-ligne { background: var(--sable); color: var(--nuit); box-shadow: inset 0 0 0 2px var(--nuit), 4px 4px 0 var(--lagon); }
+.btn svg { width: 18px; height: 18px; }
+.tel-texte { margin-top: 14px; color: var(--gris); font: 500 .95rem/1.4 var(--f-texte); }
+.tel-texte strong { color: var(--nuit); font-variant-numeric: tabular-nums; user-select: all; }
+.horizon { display: block; width: 100%; height: auto; max-width: 100%; }
+@media (max-width: 820px) {
+  .hero { padding-top: 24px; }
+  .hero .wrap { grid-template-columns: minmax(0,1fr); gap: 28px; padding-bottom: 40px; }
+  .logo { max-width: 400px; margin-inline: auto; }
+}
+
+.bandeau { overflow: hidden; background: var(--lagon); border-block: 3px solid var(--nuit); }
+.bandeau div { display: flex; gap: 40px; width: max-content; padding-block: 14px; font: 400 1.25rem/1 var(--f-titre); text-transform: uppercase; letter-spacing: .06em; color: var(--nuit); animation: defile 28s linear infinite; }
+.bandeau span:nth-child(odd) { color: var(--sable); }
+@keyframes defile { to { transform: translateX(-50%); } }
+@media (prefers-reduced-motion: reduce) { .bandeau div { animation: none; } html { scroll-behavior: auto; } .btn { transition: none; } }
+
+section.bloc { padding-block: 72px; }
+.surtitre { font: 700 .8rem/1 var(--f-etiquette); letter-spacing: .22em; text-transform: uppercase; color: var(--lagon-fonce); }
+h2.titre { font: 400 clamp(2.6rem, 6vw, 3.8rem)/1.05 var(--f-enseigne); margin-top: 10px; }
+
+.onglets { display: flex; flex-wrap: wrap; gap: 8px; margin: 28px 0 24px; }
+.onglets button { font: 700 .85rem/1 var(--f-etiquette); letter-spacing: .1em; text-transform: uppercase; padding: 11px 16px; border-radius: 999px; background: var(--sable); color: var(--nuit); border: 2px solid var(--nuit); cursor: pointer; }
+.onglets button[aria-selected="true"] { background: var(--nuit); color: var(--sable); box-shadow: 3px 3px 0 var(--lagon); }
+.avertissement { display: flex; gap: 12px; align-items: flex-start; padding: 14px 16px; border: 2px dashed var(--soleil); border-radius: 12px; color: var(--soleil-fonce); background: #fff6ee; font-size: .92rem; margin-bottom: 22px; }
+.plats { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr)); gap: 0 32px; }
+.plat { display: grid; grid-template-columns: minmax(0,1fr) auto; gap: 4px 16px; padding-block: 16px; border-bottom: 1px solid #d7e4ea; }
+.plat h3 { font: 800 1.08rem/1.3 var(--f-texte); }
+.plat .prix { font: 800 1.05rem/1.3 var(--f-texte); color: var(--soleil-fonce); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.plat p { grid-column: 1 / -1; margin: 0; color: var(--gris); font-size: .93rem; }
+
+.infos { background: var(--ecume); border-top: 3px solid var(--nuit); }
+.grille-infos { display: grid; grid-template-columns: minmax(0,1.2fr) minmax(0,1fr); gap: 40px; margin-top: 32px; }
+@media (max-width: 820px) { .grille-infos { grid-template-columns: minmax(0,1fr); } }
+table.horaires { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; background: var(--sable); border-radius: 14px; overflow: hidden; box-shadow: 0 0 0 2px var(--nuit); }
+table.horaires th, table.horaires td { text-align: left; padding: 13px 14px; border-bottom: 1px solid #d7e4ea; font-weight: 600; }
+table.horaires th { font: 700 .95rem/1.2 var(--f-etiquette); letter-spacing: .06em; text-transform: uppercase; color: var(--gris); width: 34%; }
+table.horaires td.ferme-midi { color: #8a97a8; font-weight: 400; }
+table.horaires tr.aujourdhui { background: var(--jaune); }
+table.horaires tr.aujourdhui th, table.horaires tr.aujourdhui td { color: var(--nuit); }
+table.horaires tr.aujourdhui th::after { content: " · auj."; }
+.fiche { display: grid; gap: 22px; align-content: start; }
+.fiche h3 { font: 700 .8rem/1 var(--f-etiquette); letter-spacing: .2em; text-transform: uppercase; color: var(--lagon-fonce); margin-bottom: 8px; }
+.fiche p { margin: 0; font-size: 1.05rem; }
+.fiche .copier { margin-left: 8px; font: 700 .75rem/1 var(--f-etiquette); letter-spacing: .1em; text-transform: uppercase; background: var(--sable); border: 1.5px solid var(--nuit); color: var(--nuit); padding: 6px 9px; border-radius: 8px; cursor: pointer; }
+.puces { display: flex; flex-wrap: wrap; gap: 8px; }
+.puces span { font: 600 .85rem/1 var(--f-texte); padding: 8px 12px; border-radius: 8px; background: var(--sable); border: 1.5px solid #c5d6de; }
+
+footer { padding-block: 48px 120px; color: #c9d6e6; background: var(--nuit); font-size: .88rem; }
+footer .wrap { display: flex; flex-wrap: wrap; gap: 16px 32px; justify-content: space-between; }
+footer .marque { font-size: 2.1rem; color: var(--sable); }
+footer .marque span { color: var(--jaune); }
+
+.barre { position: fixed; left: 0; right: 0; bottom: 0; z-index: 20; display: none; gap: 10px; padding: 10px 16px calc(10px + env(safe-area-inset-bottom, 0px)); background: rgba(255,255,255,.96); backdrop-filter: blur(10px); border-top: 3px solid var(--lagon); }
+.barre .btn { flex: 1; justify-content: center; padding: 14px 10px; font-size: .95rem; }
+@media (max-width: 640px) { .barre { display: flex; } }
+.legal { border-top: 3px solid var(--nuit); }
+.a-completer { color: var(--gris); margin: 16px 0 24px; }
+mark { background: var(--jaune); color: var(--nuit); padding: 0 4px; border-radius: 4px; }
+.legal-liste { display: grid; gap: 12px; max-width: 760px; }
+.legal details { border: 2px solid var(--nuit); border-radius: 14px; background: var(--sable); padding: 0 20px; }
+.legal details[open] { box-shadow: 4px 4px 0 var(--lagon); padding-bottom: 12px; }
+.legal summary { cursor: pointer; padding-block: 16px; font: 400 1.25rem/1.2 var(--f-titre); text-transform: uppercase; letter-spacing: .03em; }
+.legal details h3 { font: 700 .8rem/1 var(--f-etiquette); letter-spacing: .18em; text-transform: uppercase; color: var(--lagon-fonce); margin: 20px 0 6px; }
+.legal details p { margin: 0 0 10px; color: var(--gris); max-width: 65ch; }
+.liens-legaux { margin: 6px 0 0; }
+.liens-legaux a { color: var(--sable); }
+.signature { margin-top: 32px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,.15); color: #93a4bb; font-size: .82rem; }
+.signature strong { color: var(--jaune); letter-spacing: .06em; }
+.crousty { background: var(--ecume); border-bottom: 3px solid var(--nuit); }
+.crousty-grille { display: grid; grid-template-columns: minmax(0,.9fr) minmax(0,1.1fr); gap: 48px; align-items: center; }
+.crousty-visuel { max-width: 420px; width: 100%; margin-inline: auto; }
+.crousty-visuel svg { display: block; width: 100%; height: auto; }
+.crousty-titre { font: 400 clamp(3rem, 9vw, 5.6rem)/.95 var(--f-titre); text-transform: uppercase; margin-top: 12px; }
+.crousty-titre em { display: block; font: 400 1.05em/1 var(--f-enseigne); text-transform: none; font-style: normal; color: var(--soleil); transform: rotate(-4deg); transform-origin: left; }
+.crousty-lead { font-size: 1.15rem; color: var(--gris); max-width: 46ch; margin: 22px 0; }
+.crousty-points { list-style: none; padding: 0; margin: 0 0 28px; display: grid; gap: 10px; }
+.crousty-points li { display: grid; grid-template-columns: 9.5rem minmax(0,1fr); gap: 12px; padding-bottom: 10px; border-bottom: 1px solid #c9dfe3; color: var(--gris); }
+.crousty-points strong { font: 700 .82rem/1.6 var(--f-etiquette); letter-spacing: .14em; text-transform: uppercase; color: var(--nuit); }
+@media (max-width: 820px) { .crousty-grille { grid-template-columns: minmax(0,1fr); gap: 24px; } .crousty-visuel { max-width: 280px; } }
+@media (max-width: 460px) { .crousty-points li { grid-template-columns: minmax(0,1fr); gap: 2px; } }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <a class="marque retro" href="#accueil">Le Tasty</a>
+    <nav aria-label="Navigation principale">
+      <a href="#crousty">Tasty Crousty</a>
+      <a href="#carte">La carte</a>
+      <a href="#infos">Horaires &amp; accès</a>
+      <a href="#infos">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<main id="accueil">
+  <section class="hero">
+    <div class="wrap">
+      <div>
+        <span id="statut" class="statut ouvert"><span class="dot"></span><span id="statut-txt">Ouvert</span><small id="statut-detail"></small></span>
+        <h1 id="slogan">Du <em>soleil</em> dans chaque bouchée.</h1>
+        <p class="lead">Le fameux Tasty Crousty, des tacos généreux, des burgers qui débordent et des kebabs préparés minute, au cœur de la Venise provençale. Sur place, à emporter ou livrés chez vous, jusqu'à 23h30.</p>
+        <div class="actions">
+          <a class="btn btn-appel" href="tel:+33981324649">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z"/></svg>
+            Commander par téléphone
+          </a>
+          <a class="btn btn-ligne" href="#carte">Voir la carte</a>
+        </div>
+        <p class="tel-texte">Appelez le <strong>09 81 32 46 49</strong></p>
+      </div>
+      <div class="logo" role="img" aria-label="Logo Le Tasty version Miami : burgers, tacos, kebab, le goût qui fait sourire">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1200" aria-hidden="true">
+          <defs>
+            <linearGradient id="ciel" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#e6f8f8"/></linearGradient>
+            <linearGradient id="astre" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffd34d"/><stop offset="1" stop-color="#ff6a13"/></linearGradient>
+            <clipPath id="disque"><circle cx="600" cy="560" r="360"/></clipPath>
+          </defs>
+          <rect width="1200" height="1200" fill="url(#ciel)"/>
+          <g clip-path="url(#disque)">
+            <rect x="200" y="180" width="800" height="760" fill="url(#astre)"/>
+            <g fill="#ffffff"><rect x="200" y="640" width="800" height="12"/><rect x="200" y="690" width="800" height="18"/><rect x="200" y="745" width="800" height="24"/><rect x="200" y="805" width="800" height="30"/><rect x="200" y="870" width="800" height="70"/></g>
+          </g>
+          <g fill="#0c2340">
+            <path d="M150 1200 C160 1000 175 860 205 760 L222 765 C196 860 186 1000 190 1200 Z"/>
+            <path d="M213 762 C160 720 100 720 60 760 C110 735 160 745 205 772 Z M213 762 C190 700 140 670 90 680 C140 690 185 720 207 770 Z M213 762 C240 700 300 680 350 700 C300 700 255 730 220 772 Z M213 762 C270 735 330 750 365 800 C320 770 270 765 222 776 Z M213 762 C215 700 245 650 290 640 C255 670 235 715 222 768 Z"/>
+            <path d="M1040 1200 C1030 1040 1010 930 985 850 L1001 845 C1027 925 1050 1040 1078 1200 Z"/>
+            <path d="M992 848 C1040 805 1100 800 1145 835 C1095 815 1045 828 1000 860 Z M992 848 C1015 790 1065 760 1115 768 C1065 780 1022 812 1002 858 Z M992 848 C960 795 905 780 855 798 C905 800 950 825 984 862 Z M992 848 C940 825 880 840 845 885 C890 860 940 855 986 866 Z"/>
+          </g>
+          <g fill="none" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M440 400 Q600 210 760 400 Z" stroke="#0c2340" stroke-width="16" fill="#ffc93c"/>
+            <g fill="#0c2340"><ellipse cx="540" cy="335" rx="9" ry="5" transform="rotate(-20 540 335)"/><ellipse cx="600" cy="305" rx="9" ry="5"/><ellipse cx="660" cy="335" rx="9" ry="5" transform="rotate(20 660 335)"/><ellipse cx="570" cy="365" rx="8" ry="4"/><ellipse cx="635" cy="365" rx="8" ry="4"/></g>
+            <path d="M430 425 Q470 450 510 425 T590 425 T670 425 T750 425 T790 425" stroke="#1fae5b" stroke-width="12"/>
+            <path d="M445 460 H755" stroke="#d1301f" stroke-width="16"/>
+          </g>
+          <g transform="rotate(-6 600 640)" font-family="'Kaushan Script','Brush Script MT',cursive" font-size="250" text-anchor="middle">
+            <text x="614" y="704" fill="#00b8bd">Le Tasty</text>
+            <text x="600" y="690" fill="#ffffff" stroke="#0c2340" stroke-width="10" paint-order="stroke fill">Le Tasty</text>
+          </g>
+          <g fill="none" stroke="#00b8bd" stroke-width="16" stroke-linecap="round">
+            <path d="M330 790 Q600 960 870 790"/>
+            <path d="M310 770 L345 805 M890 770 L855 805"/>
+          </g>
+          <text x="600" y="1040" text-anchor="middle" font-family="'Anton','Impact',sans-serif" font-size="46" letter-spacing="9" fill="#0c2340">BURGERS · TACOS · KEBAB</text>
+          <text x="600" y="1105" text-anchor="middle" font-family="'Archivo','Helvetica Neue',Arial" font-weight="700" font-size="28" letter-spacing="9" fill="#007f86">LE GOÛT QUI FAIT SOURIRE</text>
+        </svg>
+      </div>
+    </div>
+    <svg class="horizon" viewBox="0 0 1200 70" preserveAspectRatio="none" aria-hidden="true"><rect y="0" width="1200" height="10" fill="#ffc93c"/><rect y="16" width="1200" height="12" fill="#ff9a2e"/><rect y="34" width="1200" height="14" fill="#ff7a1a"/><rect y="54" width="1200" height="16" fill="#00b8bd"/></svg>
+  </section>
+
+  <div class="bandeau" aria-hidden="true">
+    <div>
+      <span>Tasty Crousty</span><span>Tacos</span><span>Burgers</span><span>Kebab</span><span>Sur place</span><span>À emporter</span><span>Livraison</span><span>Tickets resto acceptés</span><span>Wi-Fi gratuit</span><span>Ouvert jusqu'à 23h30</span>
+      <span>Tasty Crousty</span><span>Tacos</span><span>Burgers</span><span>Kebab</span><span>Sur place</span><span>À emporter</span><span>Livraison</span><span>Tickets resto acceptés</span><span>Wi-Fi gratuit</span><span>Ouvert jusqu'à 23h30</span>
+    </div>
+  </div>
+
+  <section class="bloc crousty" id="crousty">
+    <div class="wrap crousty-grille">
+      <div class="crousty-visuel" aria-hidden="true">
+        <svg viewBox="0 0 400 400">
+          <circle cx="200" cy="200" r="170" fill="#ffc93c"/>
+          <g fill="#ffffff"><rect x="30" y="250" width="340" height="8"/><rect x="30" y="280" width="340" height="12"/><rect x="30" y="314" width="340" height="16"/></g>
+          <path d="M60 205 H340 C335 300 275 350 200 350 C125 350 65 300 60 205 Z" fill="#00b8bd" stroke="#0c2340" stroke-width="8" stroke-linejoin="round"/>
+          <path d="M80 235 H320" stroke="#ffffff" stroke-width="6" stroke-linecap="round" opacity=".7"/>
+          <g fill="#ffffff" stroke="#0c2340" stroke-width="4"><ellipse cx="200" cy="200" rx="140" ry="26"/></g>
+          <g stroke="#0c2340" stroke-width="5" stroke-linejoin="round">
+            <path d="M105 192 l22 -48 l44 6 l8 46 z" fill="#e9962a"/>
+            <path d="M165 188 l18 -62 l50 0 l12 60 z" fill="#f2a83a"/>
+            <path d="M230 194 l14 -50 l46 10 l2 42 z" fill="#e9962a"/>
+          </g>
+          <path d="M115 160 C150 140 180 175 215 150 S275 160 290 150" fill="none" stroke="#d1301f" stroke-width="7" stroke-linecap="round"/>
+          <path d="M120 175 C160 160 190 190 230 168 S270 178 285 170" fill="none" stroke="#fff3c4" stroke-width="6" stroke-linecap="round"/>
+          <g fill="#1fae5b"><circle cx="150" cy="140" r="5"/><circle cx="205" cy="128" r="5"/><circle cx="255" cy="148" r="5"/><circle cx="178" cy="160" r="4"/></g>
+        </svg>
+      </div>
+      <div class="crousty-texte">
+        <span class="surtitre">La signature de la maison</span>
+        <h2 class="crousty-titre"><span class="retro">Tasty</span> <em>Crousty</em></h2>
+        <p class="crousty-lead">Le plat qui fait parler tout Martigues : du poulet ultra croustillant posé sur un lit de riz, nappé de nos sauces maison. Le craquant, le fondant, le sucré-épicé, tout dans un seul bol.</p>
+        <ul class="crousty-points">
+          <li><strong>Croustillant</strong> Poulet pané minute, jamais réchauffé</li>
+          <li><strong>Généreux</strong> Un vrai bol, pour les grosses faims</li>
+          <li><strong>Sauces maison</strong> Le mélange secret du Tasty</li>
+        </ul>
+        <div class="actions">
+          <a class="btn btn-appel" href="tel:+33981324649">Commander un Crousty</a>
+          <a class="btn btn-ligne" href="#carte" data-onglet="Tasty Crousty">Voir les formules</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="bloc" id="carte">
+    <div class="wrap">
+      <span class="surtitre">Préparé minute</span>
+      <h2 class="titre retro">La carte</h2>
+      <div class="onglets" role="tablist" aria-label="Catégories de la carte" id="onglets"></div>
+      <p class="avertissement"><span aria-hidden="true">✎</span><span>Carte provisoire : les plats et les prix seront remplacés par la vraie carte du Tasty dès réception. Prix TTC, allergènes sur demande au comptoir.</span></p>
+      <div class="plats" id="plats" role="tabpanel"></div>
+    </div>
+  </section>
+
+  <section class="bloc infos" id="infos">
+    <div class="wrap">
+      <span class="surtitre">Venir au Tasty</span>
+      <h2 class="titre retro">Horaires &amp; accès</h2>
+      <div class="grille-infos">
+        <div style="overflow-x:auto">
+          <table class="horaires" id="horaires">
+            <tbody>
+              <tr data-j="1"><th>Lundi</th><td>11h00 – 14h00</td><td>18h30 – 23h30</td></tr>
+              <tr data-j="2"><th>Mardi</th><td>11h00 – 14h00</td><td>18h30 – 23h30</td></tr>
+              <tr data-j="3"><th>Mercredi</th><td>11h00 – 14h00</td><td>18h30 – 23h30</td></tr>
+              <tr data-j="4"><th>Jeudi</th><td>11h00 – 14h00</td><td>18h30 – 23h30</td></tr>
+              <tr data-j="5"><th>Vendredi</th><td class="ferme-midi">Fermé le midi</td><td>18h30 – 23h30</td></tr>
+              <tr data-j="6"><th>Samedi</th><td class="ferme-midi">Fermé le midi</td><td>18h30 – 23h30</td></tr>
+              <tr data-j="0"><th>Dimanche</th><td class="ferme-midi">Fermé le midi</td><td>18h30 – 23h30</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="fiche">
+          <div>
+            <h3>Adresse</h3>
+            <p>5 boulevard Lucien Degut<br>13500 Martigues</p>
+            <p style="margin-top:10px"><a class="btn btn-ligne" style="padding:11px 16px;font-size:.9rem" href="https://www.google.com/maps/search/?api=1&amp;query=5+Boulevard+Lucien+Degut+13500+Martigues" target="_blank" rel="noopener">Itinéraire Google Maps</a></p>
+          </div>
+          <div>
+            <h3>Téléphone</h3>
+            <p><span id="tel" style="font-variant-numeric:tabular-nums">09 81 32 46 49</span><button class="copier" type="button" data-copie="09 81 32 46 49">Copier</button></p>
+          </div>
+          <div>
+            <h3>E-mail</h3>
+            <p style="overflow-wrap:anywhere">letastymartigues@gmail.com<button class="copier" type="button" data-copie="letastymartigues@gmail.com">Copier</button></p>
+          </div>
+          <div>
+            <h3>Paiement</h3>
+            <div class="puces"><span>Carte bancaire</span><span>Sans contact</span><span>Apple Pay</span><span>Espèces</span><span>Ticket Restaurant</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="bloc legal" id="mentions-legales">
+    <div class="wrap">
+      <span class="surtitre">Informations légales</span>
+      <h2 class="titre retro">Mentions légales</h2>
+      <p class="a-completer">Les éléments marqués <mark>à compléter</mark> doivent être confirmés par le restaurant avant la mise en ligne.</p>
+      <div class="legal-liste">
+        <details id="mentions" open>
+          <summary>Mentions légales</summary>
+          <p>Conformément à l'article 6-III de la loi n° 2004-575 du 21 juin 2004 pour la confiance dans l'économie numérique (LCEN), voici les informations relatives à ce site.</p>
+          <h3>Éditeur du site</h3>
+          <p>Le Tasty, restauration rapide<br>
+          Exploitant : Idhir Rechaidia, <mark>forme juridique à compléter</mark><br>
+          5 boulevard Lucien Degut, 13500 Martigues<br>
+          Téléphone : 09 81 32 46 49 · E-mail : letastymartigues@gmail.com<br>
+          SIREN : 921 489 415 <mark>à vérifier</mark> · RCS : <mark>ville du greffe à compléter</mark><br>
+          N° de TVA intracommunautaire : <mark>à compléter</mark></p>
+          <h3>Directeur de la publication</h3>
+          <p>Idhir Rechaidia <mark>à confirmer</mark></p>
+          <h3>Hébergement</h3>
+          <p><mark>Nom, adresse et téléphone de l'hébergeur à compléter</mark></p>
+          <h3>Conception et réalisation</h3>
+          <p>OVM Design</p>
+          <h3>Propriété intellectuelle</h3>
+          <p>Le logo, les textes, les photos et la mise en page de ce site sont la propriété du Tasty ou de leurs auteurs. Toute reproduction, totale ou partielle, sans autorisation écrite préalable est interdite (articles L.335-2 et suivants du Code de la propriété intellectuelle).</p>
+          <h3>Prix et allergènes</h3>
+          <p>Les prix sont indiqués en euros, toutes taxes comprises. Ils peuvent évoluer et sont donnés à titre indicatif : les prix affichés au comptoir font foi. Conformément au règlement (UE) n° 1169/2011, la liste des allergènes présents dans nos plats est disponible sur demande au comptoir.</p>
+        </details>
+        <details id="confidentialite">
+          <summary>Politique de confidentialité (RGPD)</summary>
+          <p>Ce site est une vitrine : il ne propose ni compte client, ni formulaire, ni paiement en ligne. Il ne collecte donc aucune donnée personnelle directement.</p>
+          <h3>Données transmises lors de la visite</h3>
+          <p>Comme tout site, l'hébergeur enregistre des journaux techniques (adresse IP, date, page consultée) nécessaires au bon fonctionnement et à la sécurité du site, conservés au maximum 12 mois. Les polices de caractères sont <mark>à héberger sur le même serveur que le site</mark> pour éviter tout transfert de votre adresse IP vers un tiers.</p>
+          <h3>Liens externes</h3>
+          <p>Le bouton « Itinéraire » ouvre Google Maps et le bouton « Appeler » votre application téléphone. Une fois sur ces services, leurs propres politiques de confidentialité s'appliquent.</p>
+          <h3>Contact par e-mail ou téléphone</h3>
+          <p>Si vous nous contactez, vos coordonnées servent uniquement à vous répondre ou à préparer votre commande, et ne sont jamais revendues.</p>
+          <h3>Vos droits</h3>
+          <p>Conformément au Règlement général sur la protection des données (RGPD) et à la loi Informatique et Libertés, vous disposez d'un droit d'accès, de rectification, d'effacement, d'opposition et de limitation sur vos données. Pour l'exercer, écrivez à letastymartigues@gmail.com. Vous pouvez aussi adresser une réclamation à la CNIL (www.cnil.fr).</p>
+        </details>
+        <details id="cookies">
+          <summary>Cookies</summary>
+          <p>Ce site n'utilise aucun cookie publicitaire ni outil de mesure d'audience. Il enregistre seulement dans votre navigateur le dernier slogan affiché, pour ne pas vous montrer deux fois le même. Cette information reste sur votre appareil, n'est transmise à personne, et vous pouvez l'effacer à tout moment depuis les réglages de votre navigateur. Aucun bandeau de consentement n'est donc nécessaire.</p>
+          <p>Si un outil de statistiques ou de commande en ligne est ajouté plus tard, un bandeau de consentement sera mis en place conformément aux recommandations de la CNIL.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div>
+      <a class="marque" href="#accueil">Le <span>Tasty</span></a>
+      <p style="margin:8px 0 0">Tasty Crousty · Burgers · Tacos · Kebab à Martigues</p>
+    </div>
+    <div>
+      <p style="margin:0">5 bd Lucien Degut, 13500 Martigues · 09 81 32 46 49</p>
+      <p class="liens-legaux"><a href="#mentions-legales">Mentions légales</a> · <a href="#confidentialite">Confidentialité</a> · <a href="#cookies">Cookies</a></p>
+    </div>
+  </div>
+  <div class="wrap signature">
+    <span>© <span id="annee">2026</span> Le Tasty. Tous droits réservés.</span>
+    <span>Design by <strong>OVM Design</strong></span>
+  </div>
+</footer>
+
+<div class="barre">
+  <a class="btn btn-appel" href="tel:+33981324649">Appeler</a>
+  <a class="btn btn-ligne" href="https://www.google.com/maps/search/?api=1&amp;query=5+Boulevard+Lucien+Degut+13500+Martigues" target="_blank" rel="noopener">Itinéraire</a>
+</div>
+
+<script>
+(function () {
+  // Slogan différent à chaque chargement (jamais deux fois de suite le même)
+  var SLOGANS = [
+    ["Du ", "soleil", " dans chaque bouchée."],
+    ["Miami ", "vibes", ", saveurs de Martigues."],
+    ["Chaud, généreux, ", "Tasty", "."],
+    ["La Venise provençale a enfin son ", "spot", "."],
+    ["Le goût qui fait ", "sourire", "."],
+    ["Un tacos, et la ", "soirée", " est meilleure."],
+    ["Plus de fromage, moins de ", "soucis", "."],
+    ["Tout Martigues craque pour le ", "Crousty", "."],
+    ["Ça croustille, ça fond, c'est ", "Tasty", "."]
+  ];
+  try {
+    var dernier = -1;
+    try { dernier = parseInt(localStorage.getItem("tasty-slogan"), 10); } catch (e) {}
+    var n = Math.floor(Math.random() * SLOGANS.length);
+    if (n === dernier) n = (n + 1 + Math.floor(Math.random() * (SLOGANS.length - 1))) % SLOGANS.length;
+    try { localStorage.setItem("tasty-slogan", String(n)); } catch (e) {}
+    var s = SLOGANS[n], h1 = document.getElementById("slogan");
+    h1.textContent = s[0];
+    var em = document.createElement("em"); em.textContent = s[1];
+    h1.appendChild(em); h1.appendChild(document.createTextNode(s[2]));
+  } catch (e) {}
+
+  // Ouvre la bonne rubrique légale quand on clique un lien du pied de page
+  Array.prototype.forEach.call(document.querySelectorAll('.liens-legaux a'), function (a) {
+    a.addEventListener('click', function () { var d = document.getElementById(a.getAttribute('href').slice(1)); if (d && d.tagName === 'DETAILS') d.open = true; });
+  });
+  try { document.getElementById('annee').textContent = new Date().getFullYear(); } catch (e) {}
+
+  // Carte provisoire : à remplacer par la vraie carte du restaurant.
+  var CARTE = {
+    "Tasty Crousty": [
+      ["Tasty Crousty", "Riz, poulet croustillant, sauces maison"],
+      ["Tasty Crousty XL", "La version grosse faim : double poulet"],
+      ["Menu Tasty Crousty", "Tasty Crousty et boisson 33 cl"]
+    ],
+    "Tacos": [
+      ["Tacos M", "1 viande au choix, frites, sauce fromagère maison"],
+      ["Tacos L", "2 viandes au choix, frites, sauce fromagère maison"],
+      ["Tacos XL", "3 viandes au choix, frites, sauce fromagère maison"],
+      ["Tacos gratiné", "Supplément cheddar fondu gratiné au four"]
+    ],
+    "Burgers": [
+      ["Cheese burger", "Steak, cheddar, oignons, cornichons, sauce burger"],
+      ["Double cheese", "Deux steaks, double cheddar, sauce burger"],
+      ["Chicken burger", "Filet de poulet pané, salade, tomate, sauce blanche"],
+      ["Tasty burger", "Le burger signature de la maison"]
+    ],
+    "Kebab": [
+      ["Kebab pain", "Viande kebab, salade, tomate, oignons, frites"],
+      ["Kebab galette", "Roulé en galette, crudités, frites"],
+      ["Assiette kebab", "Viande, frites, salade, sauce au choix"]
+    ],
+    "Menus": [
+      ["Menu tacos", "Tacos au choix et boisson 33 cl"],
+      ["Menu burger", "Burger, frites et boisson 33 cl"],
+      ["Menu enfant", "Petit burger ou nuggets, frites, boisson, surprise"]
+    ],
+    "À côté": [
+      ["Frites", "Portion classique"],
+      ["Nuggets", "Par 6 ou par 9"],
+      ["Boissons 33 cl", "Sodas, thés glacés, eau"],
+      ["Desserts", "Selon la vitrine du jour"]
+    ]
+  };
+  var onglets = document.getElementById("onglets");
+  var plats = document.getElementById("plats");
+  function esc(s) { return s.replace(/[&<>"]/g, function (c) { return {"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;"}[c]; }); }
+  function afficher(cat) {
+    Array.prototype.forEach.call(onglets.children, function (b) { b.setAttribute("aria-selected", b.textContent === cat ? "true" : "false"); });
+    plats.innerHTML = CARTE[cat].map(function (p) {
+      return '<div class="plat"><h3>' + esc(p[0]) + '</h3><span class="prix">— €</span><p>' + esc(p[1]) + '</p></div>';
+    }).join("");
+  }
+  Object.keys(CARTE).forEach(function (cat, i) {
+    var b = document.createElement("button");
+    b.type = "button"; b.setAttribute("role", "tab"); b.id = "onglet-" + i; b.textContent = cat;
+    b.addEventListener("click", function () { afficher(cat); });
+    onglets.appendChild(b);
+  });
+  afficher("Tasty Crousty");
+  Array.prototype.forEach.call(document.querySelectorAll("[data-onglet]"), function (a) {
+    a.addEventListener("click", function () { afficher(a.getAttribute("data-onglet")); });
+  });
+
+  // Ouvert / fermé, à l'heure de Martigues
+  var SOIR = [[18 * 60 + 30, 23 * 60 + 30]], MIDI = [11 * 60, 14 * 60];
+  function creneaux(j) { return (j >= 1 && j <= 4) ? [MIDI].concat(SOIR) : SOIR; }
+  function hm(m) { var h = Math.floor(m / 60), mm = m % 60; return h + "h" + (mm < 10 ? "0" : "") + mm; }
+  try {
+    var parts = new Intl.DateTimeFormat("en-GB", { timeZone: "Europe/Paris", weekday: "short", hour: "2-digit", minute: "2-digit", hour12: false }).formatToParts(new Date());
+    var get = function (t) { return parts.filter(function (p) { return p.type === t; })[0].value; };
+    var jour = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"].indexOf(get("weekday"));
+    var min = (parseInt(get("hour"), 10) % 24) * 60 + parseInt(get("minute"), 10);
+    var row = document.querySelector('#horaires tr[data-j="' + jour + '"]');
+    if (row) row.className = "aujourdhui";
+    var c = creneaux(jour), ouvert = null, prochain = null;
+    c.forEach(function (s) { if (min >= s[0] && min < s[1]) ouvert = s; else if (min < s[0] && !prochain) prochain = s; });
+    var el = document.getElementById("statut"), txt = document.getElementById("statut-txt"), det = document.getElementById("statut-detail");
+    if (ouvert) { el.className = "statut ouvert"; txt.textContent = "Ouvert"; det.textContent = "jusqu'à " + hm(ouvert[1]); }
+    else {
+      el.className = "statut ferme"; txt.textContent = "Fermé";
+      if (prochain) det.textContent = "ouvre à " + hm(prochain[0]);
+      else { var d = (jour + 1) % 7; det.textContent = "ouvre demain à " + hm(creneaux(d)[0][0]); }
+    }
+  } catch (e) {}
+
+  // Boutons copier
+  Array.prototype.forEach.call(document.querySelectorAll(".copier"), function (b) {
+    b.addEventListener("click", function () {
+      var v = b.getAttribute("data-copie");
+      var ok = function () { b.textContent = "Copié"; setTimeout(function () { b.textContent = "Copier"; }, 1600); };
+      if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(v).then(ok, function () {});
+    });
+  });
+})();
+</script>
+</body>
+</html>
